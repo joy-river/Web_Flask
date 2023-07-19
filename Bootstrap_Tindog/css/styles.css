@@ -4,10 +4,18 @@ font-weight: 400;
 }
 
 h1 {
-font-family: 'Montserrat', sans-serif;
 font-size: 3.5rem;
 line-height: 1.5;
 font-weight: 900;
+}
+
+h3{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+p{
+    color: #8f8f8f;
 }
 
 .navbar{
@@ -47,3 +55,21 @@ font-weight: 900;
     background-color: #ff4c68;
     color: #fff;
  }
+
+#features{
+    text-align: center;
+    padding: 7% 15%;
+}
+
+.feature-div{
+    padding: 5%;
+}
+
+.feature-icon{
+    font-size: 2rem;
+    color: #ef8172;
+    margin-bottom: 1rem;
+}
+.feature-icon:hover{
+    color: #ff4c68;
+}
