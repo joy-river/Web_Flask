@@ -9,6 +9,12 @@ line-height: 1.5;
 font-weight: 900;
 }
 
+h2 {
+   font-size: 3rem;
+   font-weight: 700;
+   line-height: 1.5;
+}
+
 h3{
     font-size: 1.5rem;
     font-weight: 700;
@@ -72,4 +78,31 @@ p{
 }
 .feature-icon:hover{
     color: #ff4c68;
+}
+
+#testimonials{
+    text-align: center;
+    background-color: #ef8172;
+    color: #fff;
+}
+
+.img-doggo{
+    width: 10%;
+    border-radius: 100%;
+    margin: 20px;
+}
+
+.carousel-item{
+     padding: 7% 15%;
+}
+
+#press{
+    background-color: #ef8172;
+    text-align: center;
+    padding-bottom: 3%;
+}
+
+.img-press{
+    width: 15%;
+    padding: 20px 20px 50px;
 }
