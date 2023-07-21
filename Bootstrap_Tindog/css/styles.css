@@ -55,6 +55,8 @@ p{
 .title-img{
     width: 60%;
     transform: rotate(25deg);
+    position: absolute;
+    z-index: 1;
 }
 
 #title{
@@ -65,6 +67,7 @@ p{
 #features{
     text-align: center;
     padding: 7% 15%;
+    position: static;
 }
 
 .feature-div{
@@ -100,6 +103,15 @@ p{
     background-color: #ef8172;
     text-align: center;
     padding-bottom: 3%;
+}
+
+#pricing{
+    text-align: center;
+    padding: 100px;
+}
+
+.col-card{
+    padding: 3% 2%;
 }
 
 .img-press{
