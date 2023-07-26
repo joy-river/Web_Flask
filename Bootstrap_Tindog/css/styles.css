@@ -139,14 +139,17 @@ p{
     text-align: center;
     background-color: #ff4c68;
     color: #fff;
-    margin-bottom: 5%;
-    padding-bottom: 5%;
 }
 .cta-h3{
-    font-size: 3rem;
-    padding: 7% 15%;
+    font-size: 3.5rem;
+    line-height: 1.5;
+}
+
+.footer-icon{
+    margin: 20px 10px;
 }
 
 #footer{
     text-align: center;
+    padding: 7% 15%;
 }
