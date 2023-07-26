@@ -1,155 +1,190 @@
 body {
-font-family: 'Montserrat', sans-serif;
-font-weight: 400;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  text-align: center;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
 }
 
 h1 {
-font-size: 3.5rem;
-line-height: 1.5;
-font-weight: 900;
+  font-size: 3.5rem;
+  line-height: 1.5;
+  font-weight: 900;
 }
 
-h2 {
-   font-size: 3rem;
-   font-weight: 700;
-   line-height: 1.5;
+p {
+  color: #8f8f8f;
 }
 
-
-h3{
-    font-size: 1.5rem;
-    font-weight: 700;
+/* heading style section */
+.big-heading,
+.cta-heading {
+  font-size: 3.5rem;
+  line-height: 1.5;
+  font-weight: 900;
 }
 
-p{
-    color: #8f8f8f;
+.section-heading {
+  font-size: 3rem;
+  line-height: 1.5;
 }
 
-.navbar{
-    padding: 0 0 4.5rem 0;
+.price-heading {
+  font-size: 1.5rem;
 }
 
-.navbar-brand{
-    font-family: 'Ubuntu';
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #fff;
+/* navbar style section */
+
+.navbar {
+  padding: 0 0 4.5rem 0;
 }
 
-.nav-item{
-    padding: 0 18px;
+.navbar-brand {
+  font-family: "Ubuntu";
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
 }
 
-.nav-link{
-    font-family: "Montserrat-Light";
-    font-size: 1.2rem;
-    color: #fff;
-}
-.container-fluid{
-    padding: 3% 15% 7%;
+.nav-item {
+  padding: 0 18px;
 }
 
-.down-btn{
-    margin: 5% 3% 5% 0
+.nav-link {
+  font-family: "Montserrat-Light";
+  font-size: 1.2rem;
+  color: #fff;
 }
 
-.title-img{
-    width: 30%;
-    transform: rotate(25deg);
-    position: absolute;
-    right: 20%;
-}
-@media (max-width: 1028px){
-    #title{
-        text-align: center;
-    }
-
-    .title-img{
-        position: static;
-        transform: rotate(0deg);
-    }
+.container-fluid {
+  padding: 7% 15%;
 }
 
-#title{
-    background-color: #ff4c68;
-    color: #fff;
- }
+/* title style section */
 
-#features{
-    padding: 7% 15%;
-    background-color: #fff;
-    position: relative;
+#title {
+  background-color: #ff4c68;
+  color: #fff;
+  text-align: left;
 }
 
-.features-box{
-    text-align:center;
-    padding: 4.5;
+#title .container-fluid {
+  padding: 3% 15% 7%;
 }
 
-.feature-div{
-    padding: 5%;
+.down-btn {
+  margin: 5% 3% 5% 0;
 }
 
-.feature-icon{
-    font-size: 2rem;
-    color: #ef8172;
-    margin-bottom: 1rem;
-}
-.feature-icon:hover{
-    color: #ff4c68;
+.title-img {
+  width: 30%;
+  transform: rotate(25deg);
+  position: absolute;
+  right: 20%;
 }
 
-#testimonials{
+@media (max-width: 1028px) {
+  #title {
     text-align: center;
-    background-color: #ef8172;
-    color: #fff;
+  }
+
+  .title-img {
+    position: static;
+    transform: rotate(0deg);
+  }
 }
 
-.img-doggo{
-    width: 10%;
-    border-radius: 100%;
-    margin: 20px;
+/* feature style section */
+
+#features {
+  background-color: #fff;
+  position: relative;
 }
 
-.carousel-item{
-     padding: 7% 15%;
+.feature-title {
+  font-size: 1.5rem;
 }
 
-#press{
-    background-color: #ef8172;
-    text-align: center;
-    padding-bottom: 3%;
+.features-box {
+  padding: 4.5;
 }
 
-#pricing{
-    text-align: center;
-    padding: 100px;
+.feature-div {
+  padding: 5%;
 }
 
-.col-card{
-    padding: 3% 2%;
+.feature-icon {
+  font-size: 2rem;
+  color: #ef8172;
+  margin-bottom: 1rem;
+}
+.feature-icon:hover {
+  color: #ff4c68;
 }
 
-.img-press{
-    width: 15%;
-    padding: 20px 20px 50px;
+/* testimonial style section */
+
+#testimonials {
+  background-color: #ef8172;
+  color: #fff;
 }
 
-#cta{
-    text-align: center;
-    background-color: #ff4c68;
-    color: #fff;
-}
-.cta-h3{
-    font-size: 3.5rem;
-    line-height: 1.5;
+.testimonial-text {
+  font-size: 3rem;
+  line-height: 1.5;
 }
 
-.footer-icon{
-    margin: 20px 10px;
+.img-doggo {
+  width: 10%;
+  border-radius: 100%;
+  margin: 20px;
 }
 
-#footer{
-    text-align: center;
-    padding: 7% 15%;
+/* press style section */
+
+#press {
+  background-color: #ef8172;
+  padding-bottom: 3%;
+}
+
+/* pricing style section */
+
+#pricing {
+  padding: 100px;
+}
+
+.price-text {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.col-card {
+  padding: 3% 2%;
+}
+
+.img-press {
+  width: 15%;
+  padding: 20px 20px 50px;
+}
+
+/* cta style section */
+
+#cta {
+  background-color: #ff4c68;
+  color: #fff;
+}
+
+.cta-h3 {
+  font-size: 3.5rem;
+  line-height: 1.5;
+}
+/* footer style section */
+
+.footer-icon {
+  margin: 20px 10px;
 }
