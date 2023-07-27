@@ -21,7 +21,18 @@ p {
   color: #8f8f8f;
 }
 
+/* section's style */
+.color-section {
+  background-color: #ff4c68;
+  color: #fff;
+}
+
+.white-section {
+  background-color: #fff;
+}
+
 /* heading style section */
+
 .big-heading,
 .cta-heading {
   font-size: 3.5rem;
@@ -56,7 +67,7 @@ p {
 }
 
 .nav-link {
-  font-family: "Montserrat-Light";
+  font-family: "Montserrat";
   font-size: 1.2rem;
   color: #fff;
 }
@@ -68,8 +79,6 @@ p {
 /* title style section */
 
 #title {
-  background-color: #ff4c68;
-  color: #fff;
   text-align: left;
 }
 
@@ -102,7 +111,6 @@ p {
 /* feature style section */
 
 #features {
-  background-color: #fff;
   position: relative;
 }
 
@@ -131,7 +139,6 @@ p {
 
 #testimonials {
   background-color: #ef8172;
-  color: #fff;
 }
 
 .testimonial-text {
@@ -173,11 +180,6 @@ p {
 }
 
 /* cta style section */
-
-#cta {
-  background-color: #ff4c68;
-  color: #fff;
-}
 
 .cta-h3 {
   font-size: 3.5rem;
