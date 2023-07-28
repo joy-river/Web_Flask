@@ -8,9 +8,10 @@ app = Flask(__name__)
 def home():
     return render_template("index.html")
 
+
 @app.route("/<filename>")
 def redirect(filename):
-    return render_template(f"{filename}")
+    return render_template(f"{filename}", filename=filename[0:-5])
 
 
 if __name__ == "__main__":
