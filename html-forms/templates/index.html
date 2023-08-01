@@ -7,7 +7,12 @@
   </head>
   <body>
     <h1>Hello, World!</h1>
-    <label for=""></label><input type="text" /><label for=""></label
-    ><input type="text" /><button></button>
+    <form action="{{ url_for('login')}}" method="POST">
+      <label for="">ID</label>
+      <input type="text" placeholder="ID" name="username" />
+      <label for=""> Password </label
+      ><input type="text" placeholder="Password" name="password" />
+      <button>Send</button>
+    </form>
   </body>
 </html>
