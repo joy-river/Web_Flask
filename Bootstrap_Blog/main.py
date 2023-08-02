@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import requests
+import email_module
 
 app = Flask(__name__)
 
@@ -9,12 +10,12 @@ def home():
     return app.redirect("/index")
 
 
-# @app.route("/<filename>")
-# def redirect(filename):
-#     if ".html" in filename:
-#         return app.redirect(f"/{filename[0:-5]}")
-#     else:
-#         return render_template(f"{filename}.html", filename=filename, posts=posts)
+@app.route("/<filename>")
+def redirect(filename):
+    if ".html" in filename:
+        return app.redirect(f"/{filename[0:-5]}")
+    else:
+        return render_template(f"{filename}.html", filename=filename, posts=posts)
 
 
 posts = requests.get(url="https://api.npoint.io/fc3f961b4a897e129960").json()
@@ -28,7 +29,8 @@ def show_a_post(post_id):
 @app.route("/contact", methods=["GET", "POST"])
 def form_data():
     if request.method == "POST":
-        return '<h1>Your form has been sent.</h1>'
+        email_module.send_email(request.form)
+        return render_template("contact.html", filename="contact"), '<h1>Your form has been sent.</h1>'
     elif request.method == "GET":
         return render_template("contact.html", filename="contact")
 
