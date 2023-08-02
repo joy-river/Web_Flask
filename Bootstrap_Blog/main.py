@@ -30,7 +30,7 @@ def show_a_post(post_id):
 def form_data():
     if request.method == "POST":
         email_module.send_email(request.form)
-        return render_template("contact.html", filename="contact"), '<h1>Your form has been sent.</h1>'
+        return render_template("contact.html", filename="contact", post=True)
     elif request.method == "GET":
         return render_template("contact.html", filename="contact")
 
