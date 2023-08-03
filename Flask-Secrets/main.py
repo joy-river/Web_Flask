@@ -1,13 +1,12 @@
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms.fields import StringField
-from wtforms.validators import Length, DataRequired, Optional
+from flask_bootstrap import Bootstrap
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import Length, DataRequired, Email
 from werkzeug.utils import secure_filename
 
-
 app = Flask(__name__)
-
+Bootstrap(app)
 app.secret_key = "some secret string"
 
 
@@ -16,18 +15,12 @@ def home():
     return render_template('index.html')
 
 
-class UploadForm(FlaskForm):
-    upload = FileField('image', validators=[
-        FileRequired(),
-        FileAllowed(['jpg', 'png'], 'Images only!')
-    ])
-
-
 class MyForm(FlaskForm):
-    name = StringField(
-        'Full Name', [DataRequired(), Length(max=10)])
-    address = StringField('Mailing Address', [
-                          Optional(), Length(max=200)])
+    Email = StringField(
+        label='Email', validators=[Email(), Length(max=30)])
+    Password = PasswordField(label='Password', validators=[
+        DataRequired(), Length(min=8)])
+    Submit = SubmitField('Login')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -35,12 +28,10 @@ def login():
     form = MyForm()
 
     if form.validate_on_submit():
-        f = form.photo.data
-        filename = secure_filename(f.filename)
-        f.save(app.os.path.join(
-            app.instance_path, 'photos', filename
-        ))
-        return app.redirect(app.url_for('index'))
+        if form.Email.data == "admin@gmail.com" and form.Password.data == "12345678":
+            return render_template("success.html")
+        else:
+            return render_template("denied.html")
 
     return render_template('login.html', form=form)
 
