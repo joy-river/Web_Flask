@@ -2,12 +2,24 @@
 your web pages for the styles to be rendered. */
 
 body {
-background-color: #333;
-color: white;
+  background-color: #333;
+  color: white;
 }
 
 a {
-    color: #ffc107;
+  color: #ffc107;
+}
+
+input {
+  width: 500px;
+  height: 32px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  margin: 10px;
+  background-color: rgb(233, 233, 233);
 }
 
 .jumbotron {
@@ -20,6 +32,6 @@ a {
 }
 
 .space-above {
-    margin-top: 20px;
-    padding-top: 20px;
+  margin-top: 20px;
+  padding-top: 20px;
 }
