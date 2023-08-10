@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, session
 
 
 app = Flask(__name__)
@@ -64,12 +64,15 @@ class Book(db.Model):
 
 @app.route('/')
 def home():
-
-    def delete(book_to_delete):
-        db.session.delete(book_to_delete)
-
     db.create_all()
     return render_template("index.html", books=db.session.query(Book).all())
+
+
+@app.route('/<int:id>')
+def delete(id):
+    db.session.query(Book).filter_by(id=id).delete()
+    db.session.commit()
+    return app.redirect('/')
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -86,7 +89,15 @@ def add():
 
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id):
-    return render_template("edit.html", book=Book.query.get(id))
+    if request.method == "POST":
+        db.session.query(Book).filter_by(
+            id=id).update({
+                'rating': request.form['rating']}
+        )
+        db.session.commit()
+        return app.redirect('/')
+    else:
+        return render_template("edit.html", book=Book.query.get(id))
 
 
 if __name__ == "__main__":
