@@ -25,6 +25,14 @@ class Movie(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
 
 
+class myform(FlaskForm):
+    rating = StringField('Your rating out of 10', validators=[
+        DataRequired()])
+    review = StringField('Your review',
+                         validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
 new_movie = Movie(
     title="Phone Booth",
     year=2002,
@@ -40,6 +48,29 @@ new_movie = Movie(
 def home():
     db.create_all()
     return render_template("index.html", movies=db.session.query(Movie).all())
+
+
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    if request.method == "POST":
+        pass
+    else:
+        return render_template("add.html")
+
+
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
+def edit(id):
+    form = myform()
+    if form.validate_on_submit():
+        db.session.query(Movie).filter_by(id=id).update({
+            "rating": form.rating.data,
+            "review": form.review.data
+        }
+        )
+        db.session.commit()
+        return app.redirect('/')
+    else:
+        return render_template("edit.html", form=form, movie=Movie.query.get(id))
 
 
 if __name__ == '__main__':
