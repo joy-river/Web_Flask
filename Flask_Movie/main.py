@@ -6,6 +6,10 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
 
+
+header = {
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZWUzOTk4YWIwOGFhMjM3OTQyMDNkOTA1ZGZlYzczZiIsInN1YiI6IjY0ZDliMmVmMzcxMDk3MDExYzUwOThhZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4G4eitnkQ4Lv0Z6F9hx7l0Bz1HSasPGJJpWJzXtyP98"
+}
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{app.root_path}/Movie.db'
@@ -25,7 +29,7 @@ class Movie(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
 
 
-class myform(FlaskForm):
+class Editform(FlaskForm):
     rating = StringField('Your rating out of 10', validators=[
         DataRequired()])
     review = StringField('Your review',
@@ -33,15 +37,9 @@ class myform(FlaskForm):
     submit = SubmitField('Submit')
 
 
-new_movie = Movie(
-    title="Phone Booth",
-    year=2002,
-    description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
-    rating=7.3,
-    ranking=10,
-    review="My favourite character was the caller.",
-    img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg"
-)
+class Addform(FlaskForm):
+    movie_name = StringField("Movie Title", validators=[DataRequired()])
+    submit = SubmitField("Add Movie")
 
 
 @app.route("/")
@@ -52,15 +50,31 @@ def home():
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
-    if request.method == "POST":
-        pass
+    form = Addform()
+    if form.validate_on_submit():
+        movie_title = form.movie_name.data
+        response = requests.get(
+            url="https://api.themoviedb.org/3/search/movie", headers=header, params={
+                "query": movie_title
+            })
+        return render_template("select.html", data=response.json())
     else:
-        return render_template("add.html")
+        return render_template("add.html", form=form)
+
+
+@app.route('/detail/<int:id>', methods=["GET", "POST"])
+def movie_detail(id):
+    response = requests.get(
+        url=f"https://api.themoviedb.org/3/movie/{id}", headers=header)
+    new_movie = Movie(response.text())
+    db.session.query(Movie).add(new_movie)
+    db.session.commit()
+    return app.redirect('/')
 
 
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id):
-    form = myform()
+    form = Editform()
     if form.validate_on_submit():
         db.session.query(Movie).filter_by(id=id).update({
             "rating": form.rating.data,
@@ -71,6 +85,13 @@ def edit(id):
         return app.redirect('/')
     else:
         return render_template("edit.html", form=form, movie=Movie.query.get(id))
+
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    db.session.query(Movie).filter_by(id=id).delete()
+    db.session.commit()
+    return app.redirect('/')
 
 
 if __name__ == '__main__':
