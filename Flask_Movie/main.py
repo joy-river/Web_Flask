@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
+from pprint import pprint
 
 
 header = {
@@ -45,7 +46,12 @@ class Addform(FlaskForm):
 @app.route("/")
 def home():
     db.create_all()
-    return render_template("index.html", movies=db.session.query(Movie).all())
+    rows = db.session.query(Movie).count()
+    for col in db.session.query(Movie).order_by("rating"):
+        col.ranking = rows
+        rows -= 1
+    db.session.commit()
+    return render_template("index.html", movies=db.session.query(Movie).order_by("rating"))
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -66,10 +72,19 @@ def add():
 def movie_detail(id):
     response = requests.get(
         url=f"https://api.themoviedb.org/3/movie/{id}", headers=header)
-    new_movie = Movie(response.text())
-    db.session.query(Movie).add(new_movie)
+    data = response.json()
+    new_movie = Movie(
+        title=data['title'],
+        description=data['overview'],
+        year=data['release_date'][0:3],
+        img_url=f"https://image.tmdb.org/t/p/w300_and_h450_bestv2{data['poster_path']}",
+        rating="1.0",
+        ranking="None",
+        review="?"
+    )
+    db.session.add(new_movie)
     db.session.commit()
-    return app.redirect('/')
+    return app.redirect(f'/edit/{new_movie.id}')
 
 
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
