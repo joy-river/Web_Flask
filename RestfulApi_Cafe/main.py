@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, json, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import random
 
@@ -24,6 +24,22 @@ class Cafe(db.Model):
     can_take_calls = db.Column(db.Boolean, nullable=False)
     coffee_price = db.Column(db.String(250), nullable=True)
 
+    def to_json(self):
+        cafe = self
+        return {
+            'id': cafe.id,
+            'name': cafe.name,
+            "map_url": cafe.map_url,
+            "img_url": cafe.img_url,
+            "location": cafe.location,
+            "seats": cafe.seats,
+            "has_toilet": cafe.has_toilet,
+            'has_wifi': cafe.has_wifi,
+            'has_sockets': cafe.has_sockets,
+            'can_take_calls': cafe.can_take_calls,
+            "coffee_price": cafe.coffee_price
+        }
+
 
 @app.route("/")
 def home():
@@ -34,18 +50,26 @@ def home():
 @app.route("/random")
 def random_cafe():
     cafe = random.choice(db.session.query(Cafe).all())
-    return jsonify(id=cafe.id,
-                   name=cafe.name,
-                   map_url=cafe.map_url,
-                   img_url=cafe.img_url,
-                   location=cafe.location,
-                   seats=cafe.seats,
-                   has_toilet=cafe.has_toilet,
-                   has_wifi=cafe.has_wifi,
-                   has_sockets=cafe.has_sockets,
-                   can_take_calls=cafe.can_take_calls,
-                   coffee_price=cafe.coffee_price
-                   )
+    return cafe.to_json()
+
+
+@app.route("/all")
+def all_cafe():
+    cafes = db.session.query(Cafe).all()
+    return jsonify(cafes=[cafe.to_json() for cafe in cafes])
+
+
+@app.route("/search")
+def search_cafe():
+    query_loc = request.args.get("loc")
+    cafes = db.session.query(Cafe).filter_by(location=query_loc).all()
+    if len(cafes) > 0:
+        return jsonify(cafes=[cafe.to_json() for cafe in cafes])
+    else:
+        return {"error": {
+                "Not Found": "Sorry, we don't have a cafe at the location."
+                }}
+
 # HTTP POST - Create Record
 
 # HTTP PUT/PATCH - Update Record
