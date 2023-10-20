@@ -72,8 +72,45 @@ def search_cafe():
 
 # HTTP POST - Create Record
 
+
+@app.route("/add", methods=["GET", "POST"])
+def add_cafe():
+    new_cafe = Cafe(
+        name=request.form.get("name"),
+        map_url=request.form.get("map_url"),
+        img_url=request.form.get("img_url"),
+        location=request.form.get("location"),
+        seats=request.form.get("seats"),
+        has_toilet=bool(request.form.get("has_toilet")),
+        has_wifi=bool(request.form.get("has_wifi")),
+        has_sockets=bool(request.form.get("has_sockets")),
+        can_take_calls=bool(request.form.get("can_take_calls")),
+        coffee_price=request.form.get("coffee_price")
+    )
+    db.session.add(new_cafe)
+    db.session.commit()
+    return {
+        "response": {
+            "success": "Successfully added the new cafe."
+        }
+    }
 # HTTP PUT/PATCH - Update Record
 
+
+@app.route("/update-price/<int:cafe_id>", methods=["PATCH"])
+def update_price(cafe_id):
+    cafe = db.session.query(Cafe).get(cafe_id)
+    price = request.args.get("price")
+    if cafe:
+        cafe.coffee_price = price
+        db.session.commit()
+        return {
+            "success": "Successfully updated the price."
+        }
+    else:
+        return {
+            "error": f"Sorry, there is no cafe with id={cafe_id}"
+        }
 # HTTP DELETE - Delete Record
 
 
