@@ -114,5 +114,21 @@ def update_price(cafe_id):
 # HTTP DELETE - Delete Record
 
 
+@app.route("/report-closed/<int:cafe_id>")
+def delete_cafe(cafe_id):
+
+    api_key = request.args.get("api-key")
+    if api_key == "TopSecret":
+        cafe = db.session.query(Cafe).get(cafe_id)
+        if cafe:
+            cafe.delete()
+            db.session.commit()
+            return jsonify(Success="Successfully deleted cafe."), 200
+        else:
+            return jsonify(Error=f"There is no cafe with id={cafe_id}."), 404
+    else:
+        return jsonify(Error="Api key error. Make sure you have the correct api key."), 403
+
+
 if __name__ == '__main__':
     app.run(debug=True)
